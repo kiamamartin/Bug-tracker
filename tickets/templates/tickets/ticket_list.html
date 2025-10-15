@@ -1,0 +1,32 @@
+{% extends 'tickets/base.html' %}
+
+{% block content %}
+    <h2>All Tickets</h2>
+
+    {% comment %} Filter Controls {% endcomment %}
+    <div>
+        <strong>Filter by:</strong>
+        <a href="{% url 'ticket_list' %}">All</a> |
+        <a href="{% url 'ticket_list' %}?filter=my_tickets">My Assigned Tickets</a> |
+        <select onchange="if (this.value) window.location.href=this.value;">
+            <option value="">-- by status --</option>
+            {% for status_val, status_display in statuses %}
+                <option value="{% url 'ticket_list' %}?filter={{ status_val }}">{{ status_display }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <hr>
+
+    <a href="{% url 'create_ticket' %}">New Ticket</a>
+    <ul>
+        {% for ticket in tickets %}
+            <li>
+                <a href="{% url 'ticket_detail' ticket.pk %}">{{ ticket.title }}</a>
+                - <strong>{{ ticket.get_status_display }}</strong>
+                (Assigned: {{ ticket.assigned_to.username|default:"None" }})
+            </li>
+        {% empty %}
+            <li>No tickets found.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

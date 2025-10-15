@@ -1,0 +1,33 @@
+{% extends 'tickets/base.html' %}
+
+{% block content %}
+    <h2>{{ ticket.title }}</h2>
+    <p><strong>Status:</strong> {{ ticket.get_status_display }}</p>
+    <p><strong>Priority:</strong> {{ ticket.get_priority_display }}</p>
+    <p><strong>Reported by:</strong> {{ ticket.reported_by.username }}</p>
+    <p><strong>Assigned to:</strong> {{ ticket.assigned_to.username|default:"Unassigned" }}</p>
+    <p><strong>Created:</strong> {{ ticket.created_at }}</p>
+    <p><strong>Last Updated:</strong> {{ ticket.updated_at }}</p>
+    <hr>
+    <p>{{ ticket.description|linebreaks }}</p>
+
+    {% comment %} Status Update Form - only for assigned developer {% endcomment %}
+    {% if user == ticket.assigned_to and user.profile.role == 'DEVELOPER' %}
+        <hr>
+        <h3>Update Status</h3>
+        <form action="{% url 'update_ticket_status' ticket.pk %}" method="post">
+            {% csrf_token %}
+            <select name="status">
+                {% for status_val, status_display in ticket.Status.choices %}
+                    <option value="{{ status_val }}" {% if ticket.status == status_val %}selected{% endif %}>
+                        {{ status_display }}
+                    </option>
+                {% endfor %}
+            </select>
+            <button type="submit">Update Status</button>
+        </form>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'ticket_list' %}">Back to Ticket List</a>
+{% endblock %}
