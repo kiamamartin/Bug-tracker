@@ -1,6 +1,14 @@
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
+{% extends 'tickets/base.html' %}
+{% block content %}
+<div class="auth-card">
+    <h2>Login</h2>
+    <form method="post" class="auth-form">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn-primary">Login</button>
+    </form>
+    <p class="auth-link">
+        Don't have an account? <a href="{% url 'register' %}">Register</a>
+    </p>
+</div>
+{% endblock %}

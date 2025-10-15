@@ -3,7 +3,6 @@
 {% block content %}
     <h2>All Tickets</h2>
 
-    {% comment %} Filter Controls {% endcomment %}
     <div>
         <strong>Filter by:</strong>
         <a href="{% url 'ticket_list' %}">All</a> |
@@ -15,14 +14,15 @@
             {% endfor %}
         </select>
     </div>
-    <hr>
 
-    <a href="{% url 'create_ticket' %}">New Ticket</a>
+    <hr>
+    <a href="{% url 'create_ticket' %}" class="button">New Ticket</a>
+
     <ul>
         {% for ticket in tickets %}
             <li>
                 <a href="{% url 'ticket_detail' ticket.pk %}">{{ ticket.title }}</a>
-                - <strong>{{ ticket.get_status_display }}</strong>
+                - <span class="badge {{ ticket.status|lower }}">{{ ticket.get_status_display }}</span>
                 (Assigned: {{ ticket.assigned_to.username|default:"None" }})
             </li>
         {% empty %}

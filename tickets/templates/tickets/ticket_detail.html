@@ -2,7 +2,11 @@
 
 {% block content %}
     <h2>{{ ticket.title }}</h2>
-    <p><strong>Status:</strong> {{ ticket.get_status_display }}</p>
+    <p><strong>Status:</strong> 
+        <span class="badge {{ ticket.status|lower }}">
+            {{ ticket.get_status_display }}
+        </span>
+    </p>
     <p><strong>Priority:</strong> {{ ticket.get_priority_display }}</p>
     <p><strong>Reported by:</strong> {{ ticket.reported_by.username }}</p>
     <p><strong>Assigned to:</strong> {{ ticket.assigned_to.username|default:"Unassigned" }}</p>
@@ -11,7 +15,6 @@
     <hr>
     <p>{{ ticket.description|linebreaks }}</p>
 
-    {% comment %} Status Update Form - only for assigned developer {% endcomment %}
     {% if user == ticket.assigned_to and user.profile.role == 'DEVELOPER' %}
         <hr>
         <h3>Update Status</h3>
@@ -29,5 +32,5 @@
     {% endif %}
 
     <br>
-    <a href="{% url 'ticket_list' %}">Back to Ticket List</a>
+    <a href="{% url 'ticket_list' %}" class="button">Back to Ticket List</a>
 {% endblock %}
