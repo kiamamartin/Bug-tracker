@@ -166,7 +166,7 @@ form select:focus, form input:focus, form textarea:focus {
 footer {
     text-align: center;
     padding: 15px 0;
-    margin-top: 40px;
+    margin-top: 200px;
     font-size: 0.9rem;
     color: #666;
 }
@@ -211,6 +211,7 @@ button {
 .container {
     max-width: 900px;
     margin: 2rem auto;
+    margin-top: 90px;
     padding: 1.5rem;
     background: #ffffff;
     border-radius: 10px;
@@ -323,5 +324,5 @@ footer {
     padding: 1rem;
     background: #1f2937;
     color: #f1f1f1;
-    margin-top: 3rem;
+    margin-top: 80rem;
 }
